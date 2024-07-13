@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Box, Heading, VStack, Text } from '@chakra-ui/react';
+import { Box, Heading, VStack, Text, Checkbox } from '@chakra-ui/react';
 
 const AppointmentsPage = () => {
   const [appointments, setAppointments] = useState([]);
@@ -17,6 +17,19 @@ const AppointmentsPage = () => {
 
     fetchAppointments();
   }, []);
+
+  const handleCompletionToggle = async (id, completed) => {
+    try {
+      await axios.patch(`http://localhost:3000/api/appointments/${id}`, { completed });
+      setAppointments(prevAppointments =>
+        prevAppointments.map(app =>
+          app.id === id ? { ...app, completed } : app
+        )
+      );
+    } catch (error) {
+      console.error('Error updating appointment status', error);
+    }
+  };
 
   const sortedAppointments = appointments.sort((a, b) => new Date(a.appointmentDate) - new Date(b.appointmentDate));
 
@@ -61,6 +74,12 @@ const AppointmentsPage = () => {
                     <Box key={appointment.id} mt={2}>
                       <Text fontWeight="bold">Nome: {appointment.name}</Text>
                       <Text>Data de Nascimento: {new Date(appointment.birthDate).toLocaleDateString()}</Text>
+                      <Checkbox 
+                        isChecked={appointment.completed} 
+                        onChange={() => handleCompletionToggle(appointment.id, !appointment.completed, appointment.conclusion)}
+                      >
+                        {appointment.completed ? 'Realizado' : 'Não realizado'}
+                      </Checkbox>
                     </Box>
                   ))}
                 </Box>
