@@ -49,7 +49,6 @@ const AppointmentForm = () => {
     } catch (error) {
       const errorMessage = error.response?.data?.error || 'Erro ao criar o agendamento';
       setError(errorMessage);
-      console.error('Error creating appointment', error);
       openModal('Erro ao Criar Agendamento', '#FC100D');
     }
   };
