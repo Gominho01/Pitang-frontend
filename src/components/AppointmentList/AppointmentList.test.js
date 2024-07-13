@@ -1,8 +1,8 @@
 import React from 'react';
-import { render, screen, waitFor, act, fireEvent } from '@testing-library/react';
+import { screen, waitFor, act, fireEvent } from '@testing-library/react';
 import axios from 'axios';
 import AppointmentsList from './AppointmentList';
-import { ChakraProvider } from '@chakra-ui/react';
+import { customRender } from '../../utils/customRender';
 
 jest.mock('axios');
 
@@ -26,7 +26,9 @@ const mockAppointments = [
 ];
 
 describe('AppointmentsList', () => {
+  let renderComponent;
   beforeEach(() => {
+		renderComponent = () => customRender(<AppointmentsList />);
     axios.get.mockResolvedValue({ data: mockAppointments });
   });
 
@@ -36,11 +38,7 @@ describe('AppointmentsList', () => {
 
   it('should render appointments correctly', async () => {
     await act(async () => {
-      render(
-        <ChakraProvider>
-          <AppointmentsList />
-        </ChakraProvider>
-      );
+			renderComponent();
     });
 
     await waitFor(() => {
@@ -56,11 +54,7 @@ describe('AppointmentsList', () => {
 
   it('should toggle appointment status', async () => {
     await act(async () => {
-      render(
-        <ChakraProvider>
-          <AppointmentsList />
-        </ChakraProvider>
-      );
+			renderComponent();
     });
 
     await waitFor(() => {
@@ -79,13 +73,10 @@ describe('AppointmentsList', () => {
       expect(screen.queryByLabelText('Não realizado')).not.toBeInTheDocument();
     });
   });
+	
   it('should edit and saves appointment conclusion', async () => {
     await act(async () => {
-      render(
-        <ChakraProvider>
-          <AppointmentsList />
-        </ChakraProvider>
-      );
+			renderComponent();
     });
 
     const conclusionInput = await screen.findByRole('textbox', { name: /conclusão/i });
