@@ -14,14 +14,17 @@ const schema = z.object({
 });
 
 const AppointmentForm = () => {
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm({
+  const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm({
     resolver: zodResolver(schema),
   });
-  const { isOpen, onOpen} = useDisclosure();
+  const { onOpen } = useDisclosure();
+
+  const watchBirthDate = watch('birthDate');
+  const watchAppointmentDate = watch('appointmentDate');
 
   const onSubmit = async (data) => {
     try {
-      await axios.post('http://localhost:3000/appointments', data);
+      await axios.post('http://localhost:3000/api/appointments', data);
       onOpen();
     } catch (error) {
       console.error('Error creating appointment', error);
@@ -37,16 +40,26 @@ const AppointmentForm = () => {
       </div>
       <div>
         <label>Data de Nascimento:</label>
-        <DatePicker selected={new Date()} onChange={(date) => setValue('birthDate', date)} />
+        <DatePicker
+          selected={watchBirthDate || null}
+          onChange={(date) => setValue('birthDate', date)}
+          dateFormat="dd/MM/yyyy"
+        />
         {errors.birthDate && <p>{errors.birthDate.message}</p>}
       </div>
       <div>
         <label>Data e Hora do Agendamento:</label>
         <DatePicker
-          selected={new Date()}
+          selected={watchAppointmentDate || null}
           onChange={(date) => setValue('appointmentDate', date)}
           showTimeSelect
-          dateFormat="Pp"
+          timeFormat="HH:mm"
+          timeIntervals={60}
+          timeCaption="Hora"
+          dateFormat="dd/MM/yyyy HH:mm"
+          minDate={new Date()}
+          minTime={new Date(new Date().setHours(10, 0))}
+          maxTime={new Date(new Date().setHours(20, 0))}
         />
         {errors.appointmentDate && <p>{errors.appointmentDate.message}</p>}
       </div>
