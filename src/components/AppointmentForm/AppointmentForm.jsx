@@ -60,23 +60,24 @@ const AppointmentForm = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <VStack spacing={5} align="stretch">
           <FormControl>
-            <FormLabel color="teal.700">Nome:</FormLabel>
-            <Input {...register('name')} borderColor="teal.400" focusBorderColor="teal.600" />
-            {errors.name && <Text color="red.500" mt={1}>{errors.name.message}</Text>}
+            <FormLabel color="teal.700" htmlFor="name">Nome:</FormLabel>
+            <Input id="name" {...register('name')} borderColor="teal.400" focusBorderColor="teal.600" />
+            {errors.name && <Text data-testid="name-error" color="red.500" mt={1}>{errors.name.message}</Text>}
           </FormControl>
           <FormControl>
-            <FormLabel color="teal.700">Data de Nascimento:</FormLabel>
+            <FormLabel htmlFor="birthDate" color="teal.700">Data de Nascimento:</FormLabel>
             <DatePicker
+              id="birthDate"
               selected={watchBirthDate || null}
               onChange={(date) => setValue('birthDate', removeMilliseconds(date))}
               dateFormat="dd/MM/yyyy"
               maxDate={new Date()}
               customInput={<Input borderColor="teal.400" focusBorderColor="teal.600" />}
             />
-            {errors.birthDate && <Text color="red.500" mt={1}>{errors.birthDate.message}</Text>}
+            {errors.birthDate && <Text data-testid="birthDate-error" color="red.500" mt={1}>{errors.birthDate.message}</Text>}
           </FormControl>
           <FormControl>
-            <FormLabel color="teal.700">Data e Hora do Agendamento:</FormLabel>
+            <FormLabel htmlFor="appointmentDay" color="teal.700">Data e Hora do Agendamento:</FormLabel>
             <DatePicker
               selected={watchAppointmentDay || null}
               onChange={(date) => setValue('appointmentDay', removeMilliseconds(date))}
@@ -90,7 +91,7 @@ const AppointmentForm = () => {
               maxTime={new Date(new Date().setHours(20, 0))}
               customInput={<Input borderColor="teal.400" focusBorderColor="teal.600" />}
             />
-            {errors.appointmentDay && <Text color="red.500" mt={1}>{errors.appointmentDay.message}</Text>}
+            {errors.appointmentDay && <Text data-testid="appointmentDay-error" color="red.500" mt={1}>{errors.appointmentDay.message}</Text>}
           </FormControl>
           <Button mt={4} colorScheme="teal" size="lg" type="submit" width="full">
             Agendar
