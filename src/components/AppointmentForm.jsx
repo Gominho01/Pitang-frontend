@@ -58,7 +58,7 @@ const AppointmentForm = () => {
           timeCaption="Hora"
           dateFormat="dd/MM/yyyy HH:mm"
           minDate={new Date()}
-          minTime={new Date(new Date().setHours(10, 0))}
+          minTime={new Date(new Date().setHours(11, 0, 0, 0))}
           maxTime={new Date(new Date().setHours(20, 0))}
         />
         {errors.appointmentDate && <p>{errors.appointmentDate.message}</p>}
