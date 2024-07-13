@@ -35,10 +35,9 @@ const AppointmentForm = () => {
   const watchBirthDate = watch('birthDate');
   const watchAppointmentDay = watch('appointmentDay');
 
-  const handleDateChange = (date) => {
-    const roundedDate = new Date(date);
-    roundedDate.setMinutes(0, 0, 0);
-    setValue('appointmentDay', roundedDate);
+  const removeMilliseconds = (date) => {
+    date.setMilliseconds(0);
+    return date;
   };
 
   const onSubmit = async (data) => {
@@ -69,7 +68,7 @@ const AppointmentForm = () => {
             <FormLabel color="teal.700">Data de Nascimento:</FormLabel>
             <DatePicker
               selected={watchBirthDate || null}
-              onChange={(date) => setValue('birthDate', date)}
+              onChange={(date) => setValue('birthDate', removeMilliseconds(date))}
               dateFormat="dd/MM/yyyy"
               maxDate={new Date()}
               customInput={<Input borderColor="teal.400" focusBorderColor="teal.600" />}
@@ -80,7 +79,7 @@ const AppointmentForm = () => {
             <FormLabel color="teal.700">Data e Hora do Agendamento:</FormLabel>
             <DatePicker
               selected={watchAppointmentDay || null}
-              onChange={handleDateChange}
+              onChange={(date) => setValue('appointmentDay', removeMilliseconds(date))}
               showTimeSelect
               timeFormat="HH:mm"
               timeIntervals={60}
