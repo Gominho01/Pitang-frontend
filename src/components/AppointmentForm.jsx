@@ -5,7 +5,7 @@ import { z } from 'zod';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
-import { useDisclosure } from '@chakra-ui/react';
+import { useDisclosure, Button, FormControl, FormLabel, Input, VStack, Box, Heading, Text } from '@chakra-ui/react';
 import CustomModal from '../utils/customModal';
 
 const schema = z.object({
@@ -40,49 +40,59 @@ const AppointmentForm = () => {
     }
   };
 
+  const modalBody = error ? (
+    <>
+      <Text color="red.500">{error}</Text>
+      <Text>Tente novamente mais tarde.</Text>
+    </>
+  ) : (
+    <Text>Agendamento criado com sucesso!</Text>
+  );
+
   return (
-    <div>
+    <Box maxW="600px" mx="auto" mt={20} p={8} borderWidth={1} borderRadius="md" boxShadow="md" bg="gray.50">
+      <Heading mb={6} textAlign="center" fontSize="2xl" color="teal.600">Agendamento de Vacina</Heading>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label>Nome:</label>
-          <input {...register('name')} />
-          {errors.name && <p>{errors.name.message}</p>}
-        </div>
-        <div>
-          <label>Data de Nascimento:</label>
-          <DatePicker
-            selected={watchBirthDate || null}
-            onChange={(date) => setValue('birthDate', date)}
-            dateFormat="dd/MM/yyyy"
-          />
-          {errors.birthDate && <p>{errors.birthDate.message}</p>}
-        </div>
-        <div>
-          <label>Data e Hora do Agendamento:</label>
-          <DatePicker
-            selected={watchappointmentDay || null}
-            onChange={(date) => setValue('appointmentDay', date)}
-            showTimeSelect
-            timeFormat="HH:mm"
-            timeIntervals={60}
-            timeCaption="Hora"
-            dateFormat="dd/MM/yyyy HH:mm"
-            minDate={new Date()}
-            minTime={new Date(new Date().setHours(11, 0, 0, 0))}
-            maxTime={new Date(new Date().setHours(20, 0))}
-          />
-          {errors.appointmentDay && <p>{errors.appointmentDay.message}</p>}
-        </div>
-        <button type="submit">Agendar</button>
+        <VStack spacing={5} align="stretch">
+          <FormControl>
+            <FormLabel color="teal.700">Nome:</FormLabel>
+            <Input {...register('name')} borderColor="teal.400" focusBorderColor="teal.600" />
+            {errors.name && <Text color="red.500" mt={1}>{errors.name.message}</Text>}
+          </FormControl>
+          <FormControl>
+            <FormLabel color="teal.700">Data de Nascimento:</FormLabel>
+            <DatePicker
+              selected={watchBirthDate || null}
+              onChange={(date) => setValue('birthDate', date)}
+              dateFormat="dd/MM/yyyy"
+              customInput={<Input borderColor="teal.400" focusBorderColor="teal.600" />}
+            />
+            {errors.birthDate && <Text color="red.500" mt={1}>{errors.birthDate.message}</Text>}
+          </FormControl>
+          <FormControl>
+            <FormLabel color="teal.700">Data e Hora do Agendamento:</FormLabel>
+            <DatePicker
+              selected={watchappointmentDay || null}
+              onChange={(date) => setValue('appointmentDay', date)}
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={60}
+              timeCaption="Hora"
+              dateFormat="dd/MM/yyyy HH:mm"
+              minDate={new Date()}
+              minTime={new Date(new Date().setHours(11, 0, 0, 0))}
+              maxTime={new Date(new Date().setHours(20, 0))}
+              customInput={<Input borderColor="teal.400" focusBorderColor="teal.600" />}
+            />
+            {errors.appointmentDay && <Text color="red.500" mt={1}>{errors.appointmentDay.message}</Text>}
+          </FormControl>
+          <Button mt={4} colorScheme="teal" size="lg" type="submit" width="full">
+            Agendar
+          </Button>
+        </VStack>
       </form>
-      <CustomModal
-        isOpen={isOpen}
-        onClose={onClose}
-        title={error ? 'Erro ao Criar Agendamento' : 'Agendamento Criado com Sucesso'}
-        body={error ? null : 'Agendamento criado com sucesso!'}
-        error={error}
-      />
-    </div>
+      <CustomModal isOpen={isOpen} onClose={onClose} title={error ? 'Erro ao Criar Agendamento' : 'Agendamento Criado com Sucesso'} body={modalBody} />
+    </Box>
   );
 };
 
