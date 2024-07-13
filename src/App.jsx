@@ -7,6 +7,7 @@ function App() {
     <ChakraProvider>
       <Router>
         <Routes>
+          <Route path="/" element={<AppointmentPage />} />
         </Routes>
       </Router>
     </ChakraProvider>
