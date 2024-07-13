@@ -22,4 +22,10 @@ describe('Navbar', () => {
 
     expect(screen.getByText('Vaccine Scheduler')).toBeInTheDocument();
   });
+
+  it('should render "Novo Agendamento" button when on list page', () => {
+    renderWithRouter(<Navbar />, { route: '/list' });
+
+    expect(screen.getByText('Novo Agendamento')).toBeInTheDocument();
+  });
 });
