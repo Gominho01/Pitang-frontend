@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Box, Heading, VStack, Text, Checkbox } from '@chakra-ui/react';
+import { Box, Heading, VStack, Text, Checkbox, Input, Button } from '@chakra-ui/react';
 
 const AppointmentsPage = () => {
   const [appointments, setAppointments] = useState([]);
+  const [editedConclusions, setEditedConclusions] = useState({});
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -18,17 +19,27 @@ const AppointmentsPage = () => {
     fetchAppointments();
   }, []);
 
-  const handleCompletionToggle = async (id, completed) => {
+  const handleCompletionToggle = async (id, completed, conclusion) => {
     try {
-      await axios.patch(`http://localhost:3000/api/appointments/${id}`, { completed });
+      await axios.patch(`http://localhost:3000/api/appointments/${id}`, { completed, conclusion });
       setAppointments(prevAppointments =>
         prevAppointments.map(app =>
-          app.id === id ? { ...app, completed } : app
+            app.id === id ? { ...app, completed, conclusion } : app
         )
       );
+      setEditedConclusions(prev => ({ ...prev, [id]: false }));
     } catch (error) {
       console.error('Error updating appointment status', error);
     }
+  };
+  
+  const handleConclusionChange = (id, newConclusion) => {
+    setAppointments(prevAppointments =>
+      prevAppointments.map(app =>
+        app.id === id ? { ...app, conclusion: newConclusion } : app
+      )
+    );
+    setEditedConclusions(prev => ({ ...prev, [id]: true }));
   };
 
   const sortedAppointments = appointments.sort((a, b) => new Date(a.appointmentDate) - new Date(b.appointmentDate));
@@ -38,7 +49,7 @@ const AppointmentsPage = () => {
 
     sortedAppointments.forEach((appointment) => {
       const date = new Date(appointment.appointmentDate);
-      const day = date.toDateString(); 
+      const day = date.toLocaleDateString(); 
       const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
       if (!groupedAppointments[day]) {
@@ -80,6 +91,23 @@ const AppointmentsPage = () => {
                       >
                         {appointment.completed ? 'Realizado' : 'Não realizado'}
                       </Checkbox>
+                      {appointment.completed && (
+                        <Box mt={2}>
+                          <Text>Conclusão:</Text>
+                          <Input id="conclusao" aria-label="Conclusão"
+                            value={appointment.conclusion || ''} 
+                            onChange={(e) => handleConclusionChange(appointment.id, e.target.value)}
+                          />
+                          {editedConclusions[appointment.id] && (
+                            <Button
+                              onClick={() => handleCompletionToggle(appointment.id, appointment.completed, appointment.conclusion)}
+                              mt={2}
+                            >
+                              Salvar
+                            </Button>
+                          )}
+                        </Box>
+                      )}
                     </Box>
                   ))}
                 </Box>
