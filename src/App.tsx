@@ -6,7 +6,7 @@ import { ModalProvider } from './context/modalContext';
 import AppointmentList from './components/AppointmentList/AppointmentList';
 import Navbar from './components/Navbar/Navbar'
 
-function App() {
+const App: React.FC = () => {
   return (
     <ModalProvider>
       <ChakraProvider>
