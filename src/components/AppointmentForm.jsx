@@ -26,7 +26,7 @@ const schema = z.object({
 });
 
 const AppointmentForm = () => {
-  const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm({
+  const { register, handleSubmit, formState: { errors }, setValue, watch, reset } = useForm({
     resolver: zodResolver(schema),
   });
   const { openModal } = useModal()
@@ -46,6 +46,7 @@ const AppointmentForm = () => {
       await axios.post('http://localhost:3000/api/appointments', data);
       openModal('Agendamento Criado com Sucesso', '#4BB543');
       setError(null);
+      reset();
     } catch (error) {
       const errorMessage = error.response?.data?.error || 'Erro ao criar o agendamento';
       setError(errorMessage);
