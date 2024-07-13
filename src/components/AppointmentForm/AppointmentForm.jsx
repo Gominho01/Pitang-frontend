@@ -79,6 +79,7 @@ const AppointmentForm = () => {
           <FormControl>
             <FormLabel htmlFor="appointmentDay" color="teal.700">Data e Hora do Agendamento:</FormLabel>
             <DatePicker
+              id="appointmentDay"
               selected={watchAppointmentDay || null}
               onChange={(date) => setValue('appointmentDay', removeMilliseconds(date))}
               showTimeSelect
