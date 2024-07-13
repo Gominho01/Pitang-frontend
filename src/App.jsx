@@ -1,8 +1,15 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ChakraProvider } from '@chakra-ui/react';
 
 function App() {
   return (
-    <h1>A</h1>
+    <ChakraProvider>
+      <Router>
+        <Routes>
+        </Routes>
+      </Router>
+    </ChakraProvider>
   );
 }
 
