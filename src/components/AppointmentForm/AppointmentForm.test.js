@@ -12,17 +12,15 @@ describe('<AppointmentForm/>', () => {
     expect(screen.getByRole('heading', { name: /Agendamento/i })).toBeInTheDocument();
   });
 
-  describe('<AppointmentForm/>', () => {
-    it('should handle forms error', async () => {
-      customRender(<AppointmentForm />);
+  it('should handle forms error', async () => {
+    customRender(<AppointmentForm />);
 
-      const submitButton = screen.getByRole('button', { name: /Agendar/i });
-      fireEvent.click(submitButton);
-      await waitFor(() => {
-        expect(screen.getByTestId('name-error')).toHaveTextContent('Nome é obrigatório');
-        expect(screen.getByTestId('birthDate-error')).toHaveTextContent('Required');
-        expect(screen.getByTestId('appointmentDay-error')).toHaveTextContent('Required');
-      });
+    const submitButton = screen.getByRole('button', { name: /Agendar/i });
+    fireEvent.click(submitButton);
+    await waitFor(() => {
+      expect(screen.getByTestId('name-error')).toHaveTextContent('Nome é obrigatório');
+      expect(screen.getByTestId('birthDate-error')).toHaveTextContent('Required');
+      expect(screen.getByTestId('appointmentDay-error')).toHaveTextContent('Required');
     });
   });
 });
