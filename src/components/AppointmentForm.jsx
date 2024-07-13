@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 import { useDisclosure, Button, FormControl, FormLabel, Input, VStack, Box, Heading, Text } from '@chakra-ui/react';
-import CustomModal from '../utils/customModal';
+import { useModal } from '../context/modalContext';
 
 const schema = z.object({
   name: z.string().min(1, 'Nome é obrigatório'),
@@ -23,7 +23,7 @@ const AppointmentForm = () => {
   const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm({
     resolver: zodResolver(schema),
   });
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { openModal } = useModal()
   const [error, setError] = useState(null);
 
   const watchBirthDate = watch('birthDate');
@@ -32,7 +32,7 @@ const AppointmentForm = () => {
   const onSubmit = async (data) => {
     try {
       await axios.post('http://localhost:3000/api/appointments', data);
-      onOpen(); 
+      openModal('Agendamento Criado com Sucesso', 'Seu agendamento foi criado com sucesso!');
       setError(null); 
     } catch (error) {
       if (error.response) {
@@ -41,18 +41,9 @@ const AppointmentForm = () => {
         setError('Ocorreu um erro, tente novamente mais tarde');
       }
       console.error('Error creating appointment', error);
-      onOpen();
+      openModal('Erro ao Criar Agendamento', 'Tente novamente mais tarde.');
     }
   };
-
-  const modalBody = error ? (
-    <>
-      <Text color="red.500">{error}</Text>
-      <Text>Tente novamente mais tarde.</Text>
-    </>
-  ) : (
-    <Text>Agendamento criado com sucesso!</Text>
-  );
 
   return (
     <Box maxW="600px" mx="auto" mt={20} p={8} borderWidth={1} borderRadius="md" boxShadow="md" bg="gray.50">
@@ -97,7 +88,6 @@ const AppointmentForm = () => {
           </Button>
         </VStack>
       </form>
-      <CustomModal isOpen={isOpen} onClose={onClose} title={error ? 'Erro ao Criar Agendamento' : 'Agendamento Criado com Sucesso'} body={modalBody} />
     </Box>
   );
 };
