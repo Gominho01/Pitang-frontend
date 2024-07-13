@@ -1,23 +1,22 @@
 import React from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, Button } from '@chakra-ui/react';
+import { useModal } from '../context/modalContext';
 
-const CustomModal = ({ isOpen, onClose, title, body, error }) => {
+const CustomModal = () => {
+  const { isOpen, title, body, closeModal } = useModal();
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={closeModal}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{title}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          {error ? (
-            <>
-              <p>{error}</p>
-              <p>Tente novamente mais tarde.</p>
-            </>
-          ) : (
-            <>{body}</>
-          )}
+          {body}
         </ModalBody>
+        <Button mt={4} onClick={closeModal}>
+          Fechar
+        </Button>
       </ModalContent>
     </Modal>
   );
