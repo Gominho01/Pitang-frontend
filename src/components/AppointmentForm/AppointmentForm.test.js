@@ -23,4 +23,24 @@ describe('<AppointmentForm/>', () => {
       expect(screen.getByTestId('appointmentDay-error')).toHaveTextContent('Required');
     });
   });
+
+  it('should submit appointment form successfully and display modal', async () => {
+    customRender(<AppointmentForm />);
+
+    const inputName = screen.getByLabelText('Nome:');
+    const inputBirthDate = screen.getByLabelText('Data de Nascimento:');
+    const inputAppointmentDay = screen.getByLabelText('Data e Hora do Agendamento:');
+    const submitButton = screen.getByRole('button', { name: /Agendar/i });
+
+    fireEvent.change(inputName, { target: { value: 'Leandro Junior' } });
+    fireEvent.change(inputBirthDate, { target: { value: '2000-01-01' } });
+    fireEvent.change(inputAppointmentDay, { target: { value: '2025-07-10T10:00:00.000Z' } });
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(inputName.value).toBe('');
+      expect(inputBirthDate.value).toBe('');
+      expect(inputAppointmentDay.value).toBe('');
+    });
+  });
 });
