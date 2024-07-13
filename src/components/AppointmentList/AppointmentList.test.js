@@ -54,7 +54,7 @@ describe('AppointmentsList', () => {
     });
   });
 
-  it('toggles appointment status', async () => {
+  it('should toggle appointment status', async () => {
     await act(async () => {
       render(
         <ChakraProvider>
@@ -78,5 +78,26 @@ describe('AppointmentsList', () => {
       expect(updatedCheckboxes.length).toBeGreaterThan(0);
       expect(screen.queryByLabelText('Não realizado')).not.toBeInTheDocument();
     });
+  });
+  it('should edit and saves appointment conclusion', async () => {
+    await act(async () => {
+      render(
+        <ChakraProvider>
+          <AppointmentsList />
+        </ChakraProvider>
+      );
+    });
+
+    const conclusionInput = await screen.findByRole('textbox', { name: /conclusão/i });
+    await act(async () => {
+      fireEvent.change(conclusionInput, { target: { value: 'Consulta concluída com sucesso' } });
+    });
+
+    const saveButton = screen.getByText('Salvar');
+    await act(async () => {
+      fireEvent.click(saveButton);
+    });
+
+    expect(screen.getByDisplayValue('Consulta concluída com sucesso')).toBeInTheDocument();
   });
 });
