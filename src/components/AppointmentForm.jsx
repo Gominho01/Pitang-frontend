@@ -10,7 +10,12 @@ import CustomModal from '../utils/customModal';
 
 const schema = z.object({
   name: z.string().min(1, 'Nome é obrigatório'),
-  birthDate: z.date(),
+  birthDate: z.date().refine(date => {
+    const today = new Date();
+    return date <= today;
+  }, {
+    message: 'A data de nascimento deve ser anterior ou igual à data atual'
+  }),
   appointmentDay: z.date(),
 });
 
@@ -65,6 +70,7 @@ const AppointmentForm = () => {
               selected={watchBirthDate || null}
               onChange={(date) => setValue('birthDate', date)}
               dateFormat="dd/MM/yyyy"
+              maxDate={new Date()}
               customInput={<Input borderColor="teal.400" focusBorderColor="teal.600" />}
             />
             {errors.birthDate && <Text color="red.500" mt={1}>{errors.birthDate.message}</Text>}
