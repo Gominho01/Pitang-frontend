@@ -28,4 +28,10 @@ describe('Navbar', () => {
 
     expect(screen.getByText('Novo Agendamento')).toBeInTheDocument();
   });
+
+  test('renders "Ver Agendamentos" button when on forms page', () => {
+    renderWithRouter(<Navbar />, { route: '/' });
+
+    expect(screen.getByText('Ver Agendamentos')).toBeInTheDocument();
+  });
 });
