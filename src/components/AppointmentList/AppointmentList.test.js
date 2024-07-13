@@ -53,4 +53,30 @@ describe('AppointmentsList', () => {
       expect(screen.getByDisplayValue('Consulta realizada com sucesso.')).toBeInTheDocument();
     });
   });
+
+  it('toggles appointment status', async () => {
+    await act(async () => {
+      render(
+        <ChakraProvider>
+          <AppointmentsList />
+        </ChakraProvider>
+      );
+    });
+
+    await waitFor(() => {
+      expect(screen.getByLabelText('Não realizado')).toBeInTheDocument();
+    });
+
+    const checkbox = screen.getByLabelText('Não realizado');
+
+    await act(async () => {
+      fireEvent.click(checkbox);
+    });
+
+    await waitFor(() => {
+      const updatedCheckboxes = screen.getAllByLabelText('Realizado');
+      expect(updatedCheckboxes.length).toBeGreaterThan(0);
+      expect(screen.queryByLabelText('Não realizado')).not.toBeInTheDocument();
+    });
+  });
 });
