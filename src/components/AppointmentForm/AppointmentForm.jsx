@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 import { useDisclosure, Button, FormControl, FormLabel, Input, VStack, Box, Heading, Text } from '@chakra-ui/react';
-import { useModal } from '../context/modalContext';
+import { useModal } from '../../context/modalContext';
 
 const schema = z.object({
   name: z.string().min(1, 'Nome é obrigatório'),
