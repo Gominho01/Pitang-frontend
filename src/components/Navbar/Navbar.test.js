@@ -23,13 +23,19 @@ describe('Navbar', () => {
     expect(screen.getByText('Vaccine Scheduler')).toBeInTheDocument();
   });
 
-  it('should render "Novo Agendamento" button when on list page', () => {
+  it('should render "Novo Agendamento" button in list page', () => {
     renderWithRouter(<Navbar />, { route: '/list' });
 
     expect(screen.getByText('Novo Agendamento')).toBeInTheDocument();
   });
 
-  test('renders "Ver Agendamentos" button when on forms page', () => {
+  test('should not render "Ver Agendamentos" button in list page', () => {
+    renderWithRouter(<Navbar />, { route: '/list' });
+
+    expect(screen.queryByText('Ver Agendamentos')).not.toBeInTheDocument();
+  });
+
+  test('should render "Ver Agendamentos" button in forms page', () => {
     renderWithRouter(<Navbar />, { route: '/' });
 
     expect(screen.getByText('Ver Agendamentos')).toBeInTheDocument();
