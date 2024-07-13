@@ -4,12 +4,14 @@ import { ChakraProvider } from '@chakra-ui/react';
 import AppointmentPage from './components/AppointmentForm/AppointmentForm';
 import { ModalProvider } from './context/modalContext';
 import AppointmentList from './components/AppointmentList/AppointmentList';
+import Navbar from './components/Navbar/Navbar'
 
 function App() {
   return (
     <ModalProvider>
       <ChakraProvider>
         <Router>
+          <Navbar />
           <Routes>
             <Route path="/" element={<AppointmentPage />} />
             <Route path="/list" element={<AppointmentList />} />
