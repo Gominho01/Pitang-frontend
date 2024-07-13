@@ -16,7 +16,13 @@ const schema = z.object({
   }, {
     message: 'A data de nascimento deve ser anterior ou igual à data atual'
   }),
-  appointmentDay: z.date(),
+  appointmentDay: z.date().refine(date => {
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    return minutes === 0 && seconds === 0;
+  }, {
+    message: 'Os agendamentos só podem ser feitos em horários exatos (ex: 11:00, 12:00)'
+  }),
 });
 
 const AppointmentForm = () => {
@@ -27,7 +33,13 @@ const AppointmentForm = () => {
   const [error, setError] = useState(null);
 
   const watchBirthDate = watch('birthDate');
-  const watchappointmentDay = watch('appointmentDay');
+  const watchAppointmentDay = watch('appointmentDay');
+
+  const handleDateChange = (date) => {
+    const roundedDate = new Date(date);
+    roundedDate.setMinutes(0, 0, 0);
+    setValue('appointmentDay', roundedDate);
+  };
 
   const onSubmit = async (data) => {
     try {
@@ -66,8 +78,8 @@ const AppointmentForm = () => {
           <FormControl>
             <FormLabel color="teal.700">Data e Hora do Agendamento:</FormLabel>
             <DatePicker
-              selected={watchappointmentDay || null}
-              onChange={(date) => setValue('appointmentDay', date)}
+              selected={watchAppointmentDay || null}
+              onChange={handleDateChange}
               showTimeSelect
               timeFormat="HH:mm"
               timeIntervals={60}
