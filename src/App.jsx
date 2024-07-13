@@ -7,16 +7,15 @@ import CustomModal from './utils/customModal';
 
 function App() {
   return (
-    <ChakraProvider>
-      <ModalProvider>
+    <ModalProvider>
+      <ChakraProvider>
         <Router>
           <Routes>
             <Route path="/" element={<AppointmentPage />} />
           </Routes>
-          <CustomModal />
         </Router>
-      </ModalProvider>
-    </ChakraProvider>
+      </ChakraProvider>
+    </ModalProvider>
   );
 }
 

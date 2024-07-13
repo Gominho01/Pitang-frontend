@@ -1,27 +1,35 @@
 import React, { createContext, useContext, useState } from 'react';
 
 const ModalContext = createContext();
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton } from '@chakra-ui/react';
 
 export const ModalProvider = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState(null);
+    const [color, setColor] = useState('#fff'); 
 
-  const openModal = (modalTitle, modalBody) => {
-    setTitle(modalTitle);
-    setBody(modalBody);
-    setIsOpen(true);
+  const openModal = (content, color = '#fff') => { 
+    setModalContent(content);
+    setColor(color);
+    setShowModal(true);
   };
 
   const closeModal = () => {
-    setIsOpen(false);
-    setTitle('');
-    setBody('');
+    setModalContent('');
+    setColor('#fff');
+    setShowModal(false);
   };
 
   return (
-    <ModalContext.Provider value={{ isOpen, title, body, openModal, closeModal }}>
+    <ModalContext.Provider value={{ showModal, modalContent, color, openModal, closeModal }}>
       {children}
+      <Modal isOpen={showModal} onClose={closeModal}>
+        <ModalOverlay />
+        <ModalContent backgroundColor={color}>
+          <ModalHeader>{modalContent}</ModalHeader>
+          <ModalCloseButton />
+        </ModalContent>
+      </Modal>
     </ModalContext.Provider>
   );
 };
