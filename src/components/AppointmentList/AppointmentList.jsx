@@ -18,10 +18,12 @@ const AppointmentsPage = () => {
     fetchAppointments();
   }, []);
 
+  const sortedAppointments = appointments.sort((a, b) => new Date(a.appointmentDate) - new Date(b.appointmentDate));
+
   const groupAppointmentsByDateTime = () => {
     const groupedAppointments = {};
 
-    appointments.forEach((appointment) => {
+    sortedAppointments.forEach((appointment) => {
       const date = new Date(appointment.appointmentDate);
       const day = date.toDateString(); 
       const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -55,8 +57,8 @@ const AppointmentsPage = () => {
               {Object.keys(groupedAppointments[day]).map((time) => (
                 <Box key={time} p={4} borderWidth={1} borderRadius="md" boxShadow="md">
                   <Heading size="sm">{time}</Heading>
-                  {groupedAppointments[day][time].map((appointment, index) => (
-                    <Box key={index} mt={2}>
+                  {groupedAppointments[day][time].map((appointment) => (
+                    <Box key={appointment.id} mt={2}>
                       <Text fontWeight="bold">Nome: {appointment.name}</Text>
                       <Text>Data de Nascimento: {new Date(appointment.birthDate).toLocaleDateString()}</Text>
                     </Box>
