@@ -32,16 +32,13 @@ const AppointmentForm = () => {
   const onSubmit = async (data) => {
     try {
       await axios.post('http://localhost:3000/api/appointments', data);
-      openModal('Agendamento Criado com Sucesso', 'Seu agendamento foi criado com sucesso!');
-      setError(null); 
+      openModal('Agendamento Criado com Sucesso', '#4BB543');
+      setError(null);
     } catch (error) {
-      if (error.response) {
-        setError(error.response.data.error || 'Erro ao criar o agendamento');
-      } else {
-        setError('Ocorreu um erro, tente novamente mais tarde');
-      }
+      const errorMessage = error.response?.data?.error || 'Erro ao criar o agendamento';
+      setError(errorMessage);
       console.error('Error creating appointment', error);
-      openModal('Erro ao Criar Agendamento', 'Tente novamente mais tarde.');
+      openModal('Erro ao Criar Agendamento', '#FC100D');
     }
   };
 
