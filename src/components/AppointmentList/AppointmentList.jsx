@@ -69,23 +69,23 @@ const AppointmentsPage = () => {
   const groupedAppointments = groupAppointmentsByDateTime();
 
   return (
-    <Box maxW="720px" mx="auto" mt={40} p={6} borderWidth={1} borderRadius="lg" boxShadow="lg">
-      <Heading mb={8}>Lista de Agendamentos</Heading>
+    <Box maxW="600px" mx="auto" mt={20} p={8} borderWidth={1} borderRadius="md" boxShadow="md" bg="gray.50" color="teal.600" borderColor="teal.400">
+      <Heading mb={6} textAlign="center" fontSize="2xl">Lista de Agendamentos</Heading>
       {Object.keys(groupedAppointments).length === 0 ? (
         <Text>Nenhum agendamento encontrado.</Text>
       ) : (
         Object.keys(groupedAppointments).map((day) => (
           <Box key={day} mb={4}>
-            <Heading size="md">{day}</Heading>
-            <VStack spacing={4} align="stretch">
+            <Heading size="md" textAlign="center" fontSize="2xl">{day}</Heading>
+            <VStack spacing={5} align="stretch">
               {Object.keys(groupedAppointments[day]).map((time) => (
-                <Box key={time} p={4} borderWidth={1} borderRadius="md" boxShadow="md">
+                <Box borderColor="teal.400" focusBorderColor="teal.600" key={time} p={4} borderWidth={1} borderRadius="md" boxShadow="md">
                   <Heading size="sm">{time}</Heading>
                   {groupedAppointments[day][time].map((appointment) => (
                     <Box key={appointment.id} mt={2}>
                       <Text fontWeight="bold">Nome: {appointment.name}</Text>
                       <Text>Data de Nascimento: {new Date(appointment.birthDate).toLocaleDateString()}</Text>
-                      <Checkbox 
+                      <Checkbox
                         isChecked={appointment.completed} 
                         onChange={() => handleCompletionToggle(appointment.id, !appointment.completed, appointment.conclusion)}
                       >
