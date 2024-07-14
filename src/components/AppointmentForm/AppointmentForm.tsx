@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { z, ZodType } from 'zod';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
-import { useDisclosure, Button, FormControl, FormLabel, Input, VStack, Box, Heading, Text } from '@chakra-ui/react';
+import {  Button, FormControl, FormLabel, Input, VStack, Box, Heading, Text } from '@chakra-ui/react';
 import { useModal } from '../../context/modalContext';
 
-const schema = z.object({
+const schema: ZodType<any> = z.object({
   name: z.string().min(1, 'Nome é obrigatório'),
   birthDate: z.date().refine(date => {
     const today = new Date();
@@ -25,28 +25,34 @@ const schema = z.object({
   }),
 });
 
-const AppointmentForm = () => {
-  const { register, handleSubmit, formState: { errors }, setValue, watch, reset } = useForm({
+type FormData = {
+  name: string;
+  birthDate: Date;
+  appointmentDay: Date;
+};
+
+const AppointmentForm: React.FC = () => {
+  const { register, handleSubmit, formState: { errors }, setValue, watch, reset } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
   const { openModal } = useModal()
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   const watchBirthDate = watch('birthDate');
   const watchAppointmentDay = watch('appointmentDay');
 
-  const removeMilliseconds = (date) => {
+  const removeMilliseconds = (date: Date): Date => {
     date.setMilliseconds(0);
     return date;
   };
-
-  const onSubmit = async (data) => {
+  
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
       await axios.post('http://localhost:3000/api/appointments', data);
       openModal('Agendamento Criado com Sucesso', '#4BB543');
       setError(null);
       reset();
-    } catch (error) {
+    } catch (error: any) {
       const errorMessage = error.response?.data?.error || 'Erro ao criar o agendamento';
       setError(errorMessage);
       openModal('Erro ao Criar Agendamento', '#FC100D');
@@ -68,7 +74,11 @@ const AppointmentForm = () => {
             <DatePicker
               id="birthDate"
               selected={watchBirthDate || null}
-              onChange={(date) => setValue('birthDate', removeMilliseconds(date))}
+              onChange={(date) => {
+                if (date) {
+                  setValue('birthDate', removeMilliseconds(date));
+                }
+              }}
               dateFormat="dd/MM/yyyy"
               maxDate={new Date()}
               customInput={<Input borderColor="teal.400" focusBorderColor="teal.600" />}
@@ -80,7 +90,11 @@ const AppointmentForm = () => {
             <DatePicker
               id="appointmentDay"
               selected={watchAppointmentDay || null}
-              onChange={(date) => setValue('appointmentDay', removeMilliseconds(date))}
+              onChange={(date) => {
+                if (date) {
+                  setValue('appointmentDay', removeMilliseconds(date));
+                }
+              }}
               showTimeSelect
               timeFormat="HH:mm"
               timeIntervals={60}

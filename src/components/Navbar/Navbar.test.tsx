@@ -4,7 +4,11 @@ import { render, screen } from '@testing-library/react';
 import Navbar from './Navbar';
 import '@testing-library/react';
 
-const renderWithRouter = (ui, { route = '/' } = {}) => {
+interface RenderWithRouterOptions {
+  route?: string;
+}
+
+const renderWithRouter = (ui: React.ReactElement, { route = '/' }: RenderWithRouterOptions = {}) => {
   window.history.pushState({}, 'Test page', route);
 
   return render(

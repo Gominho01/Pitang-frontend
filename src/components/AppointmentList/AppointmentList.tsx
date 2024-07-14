@@ -2,9 +2,24 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Box, Heading, VStack, Text, Checkbox, Input, Button } from '@chakra-ui/react';
 
-const AppointmentsPage = () => {
-  const [appointments, setAppointments] = useState([]);
-  const [editedConclusions, setEditedConclusions] = useState({});
+interface Appointment {
+  id: number;
+  name: string;
+  birthDate: string;
+  appointmentDate: string;
+  completed: boolean;
+  conclusion: string;
+}
+
+interface GroupedAppointments {
+  [key: string]: {
+    [key: string]: Appointment[];
+  };
+}
+
+const AppointmentsPage: React.FC = () => {
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [editedConclusions, setEditedConclusions] = useState<{ [key: number]: boolean }>({});
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -19,12 +34,12 @@ const AppointmentsPage = () => {
     fetchAppointments();
   }, []);
 
-  const handleCompletionToggle = async (id, completed, conclusion) => {
+  const handleCompletionToggle = async (id: number, completed: boolean, conclusion: string) => {
     try {
       await axios.patch(`http://localhost:3000/api/appointments/${id}`, { completed, conclusion });
       setAppointments(prevAppointments =>
         prevAppointments.map(app =>
-            app.id === id ? { ...app, completed, conclusion } : app
+          app.id === id ? { ...app, completed, conclusion } : app
         )
       );
       setEditedConclusions(prev => ({ ...prev, [id]: false }));
@@ -32,8 +47,8 @@ const AppointmentsPage = () => {
       console.error('Error updating appointment status', error);
     }
   };
-  
-  const handleConclusionChange = (id, newConclusion) => {
+
+  const handleConclusionChange = (id: number, newConclusion: string) => {
     setAppointments(prevAppointments =>
       prevAppointments.map(app =>
         app.id === id ? { ...app, conclusion: newConclusion } : app
@@ -42,14 +57,14 @@ const AppointmentsPage = () => {
     setEditedConclusions(prev => ({ ...prev, [id]: true }));
   };
 
-  const sortedAppointments = appointments.sort((a, b) => new Date(a.appointmentDate) - new Date(b.appointmentDate));
+  const sortedAppointments = appointments.sort((a, b) => new Date(a.appointmentDate).getTime() - new Date(b.appointmentDate).getTime());
 
-  const groupAppointmentsByDateTime = () => {
-    const groupedAppointments = {};
+  const groupAppointmentsByDateTime = (): GroupedAppointments => {
+    const groupedAppointments: GroupedAppointments = {};
 
     sortedAppointments.forEach((appointment) => {
       const date = new Date(appointment.appointmentDate);
-      const day = date.toLocaleDateString(); 
+      const day = date.toLocaleDateString();
       const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
       if (!groupedAppointments[day]) {
@@ -79,14 +94,14 @@ const AppointmentsPage = () => {
             <Heading size="md" textAlign="center" fontSize="2xl">{day}</Heading>
             <VStack spacing={5} align="stretch">
               {Object.keys(groupedAppointments[day]).map((time) => (
-                <Box borderColor="teal.400" focusBorderColor="teal.600" key={time} p={4} borderWidth={1} borderRadius="md" boxShadow="md">
+                <Box borderColor="teal.400" key={time} p={4} borderWidth={1} borderRadius="md" boxShadow="md">
                   <Heading size="sm">{time}</Heading>
                   {groupedAppointments[day][time].map((appointment) => (
                     <Box key={appointment.id} mt={2}>
                       <Text fontWeight="bold">Nome: {appointment.name}</Text>
                       <Text>Data de Nascimento: {new Date(appointment.birthDate).toLocaleDateString()}</Text>
                       <Checkbox
-                        isChecked={appointment.completed} 
+                        isChecked={appointment.completed}
                         onChange={() => handleCompletionToggle(appointment.id, !appointment.completed, appointment.conclusion)}
                       >
                         {appointment.completed ? 'Realizado' : 'Não realizado'}
@@ -94,8 +109,10 @@ const AppointmentsPage = () => {
                       {appointment.completed && (
                         <Box mt={2}>
                           <Text>Conclusão:</Text>
-                          <Input id="conclusao" aria-label="Conclusão"
-                            value={appointment.conclusion || ''} 
+                          <Input
+                            id="conclusao"
+                            aria-label="Conclusão"
+                            value={appointment.conclusion || ''}
                             onChange={(e) => handleConclusionChange(appointment.id, e.target.value)}
                           />
                           {editedConclusions[appointment.id] && (

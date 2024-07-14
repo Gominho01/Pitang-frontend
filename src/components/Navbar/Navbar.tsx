@@ -1,9 +1,9 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { Box, Flex, HStack, Heading} from '@chakra-ui/react';
+import { Box, Flex, HStack, Heading } from '@chakra-ui/react';
 import CustomButton from '../../utils/customButton';
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const location = useLocation();
   const listPage = location.pathname === '/list';
 
