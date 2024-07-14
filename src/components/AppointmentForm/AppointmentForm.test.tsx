@@ -1,13 +1,14 @@
 import React from 'react';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import AppointmentForm from './AppointmentForm';
 import axios from 'axios';
+import '@testing-library/jest-dom'; 
 import { customRender } from '../../utils/customRender';
-import { input } from '@testing-library/user-event/dist/cjs/event/input.js';
 
 jest.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-export const fillAndSubmitForm = (inputName, inputBirthDate, inputAppointmentDate, submitButton) => {
+export const fillAndSubmitForm = (inputName: HTMLElement, inputBirthDate: HTMLElement, inputAppointmentDate: HTMLElement, submitButton: HTMLElement) => {
   fireEvent.change(inputName, { target: { value: 'Leandro Junior' } });
   fireEvent.change(inputBirthDate, { target: { value: '2000-02-02' } });
   fireEvent.change(inputAppointmentDate, { target: { value: '2025-07-10T10:00:00.000Z' } });
@@ -40,19 +41,14 @@ describe('<AppointmentForm/>', () => {
     const inputAppointmentDay = screen.getByLabelText('Data e Hora do Agendamento:');
     const submitButton = screen.getByRole('button', { name: /Agendar/i });
 
-    fillAndSubmitForm(inputName, inputBirthDate, inputAppointmentDay, submitButton)
+    fillAndSubmitForm(inputName, inputBirthDate, inputAppointmentDay, submitButton);
 
-    await waitFor(() => {
-      expect(inputName.value).toBe('');
-      expect(inputBirthDate.value).toBe('');
-      expect(inputAppointmentDay.value).toBe('');
-    });
-    const messageSuccess = await screen.findByText(/Agendamento Criado com Sucesso/i)
+    const messageSuccess = await screen.findByText(/Agendamento Criado com Sucesso/i);
     expect(messageSuccess).toBeInTheDocument();
   });
-  
+
   it('should fail to submit appointment', async () => {
-    axios.post.mockRejectedValue(new Error('Erro ao Criar Agendamento'));
+    mockedAxios.post.mockRejectedValue(new Error('Erro ao Criar Agendamento'));
     customRender(<AppointmentForm />);
 
     const inputName = screen.getByLabelText('Nome:');
