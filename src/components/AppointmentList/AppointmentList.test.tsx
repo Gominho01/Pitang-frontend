@@ -26,10 +26,8 @@ const mockAppointments = [
 ];
 
 describe('AppointmentsList', () => {
-  let renderComponent;
   beforeEach(() => {
-		renderComponent = () => customRender(<AppointmentsList />);
-    axios.get.mockResolvedValue({ data: mockAppointments });
+    (axios.get as jest.Mock).mockResolvedValue({ data: mockAppointments });
   });
 
   afterEach(() => {
@@ -38,7 +36,7 @@ describe('AppointmentsList', () => {
 
   it('should render appointments correctly', async () => {
     await act(async () => {
-			renderComponent();
+      customRender(<AppointmentsList />);
     });
 
     await waitFor(() => {
@@ -54,7 +52,7 @@ describe('AppointmentsList', () => {
 
   it('should toggle appointment status', async () => {
     await act(async () => {
-			renderComponent();
+      customRender(<AppointmentsList />);
     });
 
     await waitFor(() => {
@@ -73,10 +71,10 @@ describe('AppointmentsList', () => {
       expect(screen.queryByLabelText('Não realizado')).not.toBeInTheDocument();
     });
   });
-	
+
   it('should edit and saves appointment conclusion', async () => {
     await act(async () => {
-			renderComponent();
+      customRender(<AppointmentsList />);
     });
 
     const conclusionInput = await screen.findByRole('textbox', { name: /conclusão/i });
@@ -91,4 +89,4 @@ describe('AppointmentsList', () => {
 
     expect(screen.getByDisplayValue('Consulta concluída com sucesso')).toBeInTheDocument();
   });
-});
+})
