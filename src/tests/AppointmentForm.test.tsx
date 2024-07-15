@@ -3,16 +3,10 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import AppointmentForm from '../pages/AppointmentFormPage';
 import api from '../services/api';
 import { customRender } from '../utils/customRender';
+import { fillAndSubmitForm } from '../utils/testUtils';
 
 jest.mock('../services/api');
 const mockedApi = api as jest.Mocked<typeof api>;
-
-export const fillAndSubmitForm = (inputName: HTMLElement, inputBirthDate: HTMLElement, inputAppointmentDate: HTMLElement, submitButton: HTMLElement) => {
-  fireEvent.change(inputName, { target: { value: 'Leandro Junior' } });
-  fireEvent.change(inputBirthDate, { target: { value: '2000-02-02' } });
-  fireEvent.change(inputAppointmentDate, { target: { value: '2025-07-10T16:00:00.000Z' } });
-  fireEvent.click(submitButton);
-};
 
 describe('<AppointmentForm/>', () => {
   it('should render correctly and show title', async () => {
