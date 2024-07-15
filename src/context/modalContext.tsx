@@ -1,13 +1,6 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton } from '@chakra-ui/react';
-
-interface ModalContextProps {
-  showModal: boolean;
-  modalContent: string | null;
-  color: string;
-  openModal: (content: string, color?: string) => void;
-  closeModal: () => void;
-}
+import { ModalContextProps, ModalProviderProps } from '../interfaces/Modal.interfaces';
 
 const ModalContext = createContext<ModalContextProps | undefined>(undefined);
 
@@ -18,10 +11,6 @@ export const useModal = (): ModalContextProps => {
   }
   return context;
 };
-
-interface ModalProviderProps {
-  children: ReactNode;
-}
 
 export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const [showModal, setShowModal] = useState(false);
