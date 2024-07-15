@@ -46,7 +46,13 @@ const AppointmentsPage: React.FC = () => {
   const groupedAppointmentsByDateTime = (): GroupedAppointments => {
     const groupedAppointments: GroupedAppointments = {};
 
-    appointments.forEach((appointment) => {
+    const sortedAppointments = [...appointments].sort((a, b) => {
+      const dateA = new Date(a.appointmentDate);
+      const dateB = new Date(b.appointmentDate);
+      return dateA.getTime() - dateB.getTime();
+    });
+
+    sortedAppointments.forEach((appointment) => {
       const appointmentDate = new Date(appointment.appointmentDate);
       if (!isValidDate(appointmentDate)) {
         console.warn(`Invalid date found: ${appointment.appointmentDate}`);
