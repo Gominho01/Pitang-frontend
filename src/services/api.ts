@@ -14,3 +14,13 @@ export const updateAppointment = async (id: number, completed: boolean, conclusi
     throw error;
   }
 };
+
+export const fetchAppointments = async () => {
+  try {
+    const response = await api.get('/appointments');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching appointments', error);
+    throw error;
+  }
+};

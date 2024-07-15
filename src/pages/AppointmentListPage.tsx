@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Heading, Text, Select } from '@chakra-ui/react';
-import { Appointment, GroupedAppointments } from '../interfaces/List.interfaces';
+import { Appointment } from '../interfaces/List.interfaces';
 import AppointmentGroup from '../components/AppointmentList/AppointmentGroup';
-import api, { updateAppointment } from '../services/api';
+import api, { updateAppointment, fetchAppointments } from '../services/api';
 import { getAllDatesWithAppointments, groupedAppointmentsByDateTime } from '../utils/appointmentsUtils';
 
 const AppointmentsPage: React.FC = () => {
@@ -10,16 +10,16 @@ const AppointmentsPage: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchAppointments = async () => {
+    const fetchData = async () => {
       try {
-        const response = await api.get('/appointments');
-        setAppointments(response.data);
+        const data = await fetchAppointments();
+        setAppointments(data);
       } catch (error) {
         console.error('Error fetching appointments', error);
       }
     };
 
-    fetchAppointments();
+    fetchData();
   }, []);
 
   const handleDateChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
