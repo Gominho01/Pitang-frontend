@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import AppointmentPage from './pages/AppointmentFormPage';
 import { ModalProvider } from './context/modalContext';
-import AppointmentList from './pages/AppointmentsPage';
+import AppointmentList from './pages/AppointmentListPage';
 import Navbar from './components/Navbar/Navbar'
 
 const App: React.FC = () => {

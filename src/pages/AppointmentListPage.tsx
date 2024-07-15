@@ -1,4 +1,3 @@
-// src/pages/AppointmentsPage.tsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Box, Heading, Text } from '@chakra-ui/react';

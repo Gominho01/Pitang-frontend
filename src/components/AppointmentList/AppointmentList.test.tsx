@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, waitFor, act, fireEvent } from '@testing-library/react';
 import axios from 'axios';
-import AppointmentsList from '../../pages/AppointmentsPage';
+import AppointmentsList from '../../pages/AppointmentListPage';
 import { customRender } from '../../utils/customRender';
 
 jest.mock('axios');
