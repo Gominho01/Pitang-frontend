@@ -1,10 +1,10 @@
+import api from '../services/api';
 import React from 'react';
 import { screen, waitFor, act, fireEvent } from '@testing-library/react';
-import axios from 'axios';
 import AppointmentsList from '../pages/AppointmentListPage';
 import { customRender } from '../utils/customRender';
 
-jest.mock('axios');
+jest.mock('../services/api');
 
 const mockAppointments = [
   {
@@ -27,7 +27,7 @@ const mockAppointments = [
 
 describe('AppointmentsList', () => {
   beforeEach(() => {
-    (axios.get as jest.Mock).mockResolvedValue({ data: mockAppointments });
+    (api.get as jest.Mock).mockImplementation(() => Promise.resolve({ data: mockAppointments }));
   });
 
   afterEach(() => {
@@ -72,7 +72,7 @@ describe('AppointmentsList', () => {
     });
   });
 
-  it('should edit and saves appointment conclusion', async () => {
+  it('should edit and save appointment conclusion', async () => {
     await act(async () => {
       customRender(<AppointmentsList />);
     });
@@ -89,4 +89,4 @@ describe('AppointmentsList', () => {
 
     expect(screen.getByDisplayValue('Consulta concluída com sucesso')).toBeInTheDocument();
   });
-})
+});

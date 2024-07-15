@@ -1,17 +1,16 @@
 import React from 'react';
-import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import AppointmentForm from '../pages/AppointmentFormPage';
-import axios from 'axios';
-import '@testing-library/jest-dom'; 
+import api from '../services/api';
 import { customRender } from '../utils/customRender';
 
-jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+jest.mock('../services/api');
+const mockedApi = api as jest.Mocked<typeof api>;
 
 export const fillAndSubmitForm = (inputName: HTMLElement, inputBirthDate: HTMLElement, inputAppointmentDate: HTMLElement, submitButton: HTMLElement) => {
   fireEvent.change(inputName, { target: { value: 'Leandro Junior' } });
   fireEvent.change(inputBirthDate, { target: { value: '2000-02-02' } });
-  fireEvent.change(inputAppointmentDate, { target: { value: '2025-07-10T10:00:00.000Z' } });
+  fireEvent.change(inputAppointmentDate, { target: { value: '2025-07-10T16:00:00.000Z' } });
   fireEvent.click(submitButton);
 };
 
@@ -48,7 +47,7 @@ describe('<AppointmentForm/>', () => {
   });
 
   it('should fail to submit appointment', async () => {
-    mockedAxios.post.mockRejectedValue(new Error('Erro ao Criar Agendamento'));
+    mockedApi.post.mockRejectedValue(new Error('Erro ao Criar Agendamento'));
     customRender(<AppointmentForm />);
 
     const inputName = screen.getByLabelText('Nome:');
