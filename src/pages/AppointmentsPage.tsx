@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Box, Heading, Text } from '@chakra-ui/react';
-import { Appointment, GroupedAppointments } from '../interfaces/Appointment.interfaces';
+import { Appointment, GroupedAppointments } from '../interfaces/List.interfaces';
 import AppointmentGroup from '../components/AppointmentList/AppointmentGroup';
 
 const AppointmentsPage: React.FC = () => {

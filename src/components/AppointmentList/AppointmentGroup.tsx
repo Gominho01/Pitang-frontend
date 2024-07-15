@@ -1,7 +1,7 @@
 // src/components/AppointmentsPage/AppointmentGroup.tsx
 import React from 'react';
 import { Box, Heading, VStack } from '@chakra-ui/react';
-import { AppointmentGroupProps } from '../../interfaces/Appointment.interfaces';
+import { AppointmentGroupProps } from '../../interfaces/List.interfaces';
 import AppointmentItem from './AppointmentItem';
 
 const AppointmentGroup: React.FC<AppointmentGroupProps> = ({ day, appointments, handleCompletionToggle }) => {
