@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Heading, Text, Select } from '@chakra-ui/react';
 import { Appointment, GroupedAppointments } from '../interfaces/List.interfaces';
 import AppointmentGroup from '../components/AppointmentList/AppointmentGroup';
-import api from '../services/api';
+import api, { updateAppointment } from '../services/api';
 import { getAllDatesWithAppointments, groupedAppointmentsByDateTime } from '../utils/appointmentsUtils';
 
 const AppointmentsPage: React.FC = () => {
@@ -26,9 +26,9 @@ const AppointmentsPage: React.FC = () => {
     setSelectedDate(event.target.value || null);
   };
 
-  const handleCompletionToggle = async (id: number, completed: boolean, conclusion: string) => {
+  const handleUpdate = async (id: number, completed: boolean, conclusion: string) => {
     try {
-      await api.patch(`/appointments/${id}`, { completed, conclusion });
+      await updateAppointment(id, completed, conclusion);
       setAppointments(prevAppointments =>
         prevAppointments.map(app =>
           app.id === id ? { ...app, completed, conclusion } : app
@@ -63,7 +63,7 @@ const AppointmentsPage: React.FC = () => {
             key={day}
             day={day}
             appointments={groupedAppointments[day]}
-            handleCompletionToggle={handleCompletionToggle}
+            handleCompletionToggle={handleUpdate}
           />
         ))
       )}

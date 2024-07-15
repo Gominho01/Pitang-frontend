@@ -5,3 +5,12 @@ const api = axios.create({
 });
 
 export default api;
+
+export const updateAppointment = async (id: number, completed: boolean, conclusion: string) => {
+  try {
+    await api.patch(`/appointments/${id}`, { completed, conclusion });
+  } catch (error) {
+    console.error('Error updating appointment status', error);
+    throw error;
+  }
+};
