@@ -3,6 +3,7 @@ import { Box, Heading, Text, Select } from '@chakra-ui/react';
 import { Appointment, GroupedAppointments } from '../interfaces/List.interfaces';
 import AppointmentGroup from '../components/AppointmentList/AppointmentGroup';
 import api from '../services/api';
+import { getAllDatesWithAppointments } from '../utils/appointmentsUtils';
 
 const AppointmentsPage: React.FC = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -42,18 +43,7 @@ const AppointmentsPage: React.FC = () => {
     return date instanceof Date && !isNaN(date.getTime());
   };
 
-  const getAllDatesWithAppointments = () => {
-    const datesSet = new Set<string>();
-    appointments.forEach(appointment => {
-      const appointmentDate = new Date(appointment.appointmentDate);
-      if (isValidDate(appointmentDate)) {
-        datesSet.add(appointmentDate.toLocaleDateString());
-      }
-    });
-    return Array.from(datesSet);
-  };
-
-  const groupAppointmentsByDateTime = (): GroupedAppointments => {
+  const groupedAppointmentsByDateTime = (): GroupedAppointments => {
     const groupedAppointments: GroupedAppointments = {};
 
     appointments.forEach((appointment) => {
@@ -84,8 +74,8 @@ const AppointmentsPage: React.FC = () => {
     return groupedAppointments;
   };
 
-  const groupedAppointments = groupAppointmentsByDateTime();
-  const allDatesWithAppointments = getAllDatesWithAppointments();
+  const groupedAppointments = groupedAppointmentsByDateTime();
+  const allDatesWithAppointments = getAllDatesWithAppointments(appointments);
 
   return (
     <Box maxW="600px" mx="auto" mt={20} p={8} borderWidth={1} borderRadius="md" boxShadow="md" bg="gray.50" color="teal.600" borderColor="teal.400">
