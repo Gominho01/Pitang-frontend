@@ -1,21 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Box, Heading, VStack, Text, Checkbox, Input, Button } from '@chakra-ui/react';
-
-interface Appointment {
-  id: number;
-  name: string;
-  birthDate: string;
-  appointmentDate: string;
-  completed: boolean;
-  conclusion: string;
-}
-
-interface GroupedAppointments {
-  [key: string]: {
-    [key: string]: Appointment[];
-  };
-}
+import {Appointment, GroupedAppointments} from '../../interfaces/Appointment.interfaces'
 
 const AppointmentsPage: React.FC = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
