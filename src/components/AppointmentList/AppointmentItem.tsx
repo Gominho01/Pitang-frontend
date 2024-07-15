@@ -1,4 +1,3 @@
-// src/components/AppointmentsPage/AppointmentItem.tsx
 import React, { useState } from 'react';
 import { Box, Text, Checkbox, Input, Button } from '@chakra-ui/react';
 import { AppointmentItemProps } from '../../interfaces/List.interfaces';

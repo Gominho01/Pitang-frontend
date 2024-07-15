@@ -1,4 +1,3 @@
-// src/components/AppointmentsPage/AppointmentGroup.tsx
 import React from 'react';
 import { Box, Heading, VStack } from '@chakra-ui/react';
 import { AppointmentGroupProps } from '../../interfaces/List.interfaces';
