@@ -3,27 +3,9 @@ import React from 'react';
 import { screen, waitFor, act, fireEvent } from '@testing-library/react';
 import AppointmentsList from '../pages/AppointmentListPage';
 import { customRender } from '../utils/customRender';
+import { mockAppointments } from '../utils/testUtils';
 
 jest.mock('../services/api');
-
-const mockAppointments = [
-  {
-    id: '1',
-    name: 'Lucas Gominho',
-    birthDate: '2003-04-27T03:00:00.000Z',
-    appointmentDate: '2024-07-08T14:00:00.000Z',
-    completed: false,
-    conclusion: '',
-  },
-  {
-    id: '2',
-    name: 'Maria Silva',
-    birthDate: '1990-01-01T03:00:00.000Z',
-    appointmentDate: '2024-07-09T15:00:00.000Z',
-    completed: true,
-    conclusion: 'Consulta realizada com sucesso.',
-  },
-];
 
 describe('AppointmentsList', () => {
   beforeEach(() => {
