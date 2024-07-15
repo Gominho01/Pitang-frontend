@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
 import { VStack, Box, Heading, Text } from '@chakra-ui/react';
 import { useModal } from '../context/modalContext';
 import { schema } from '../schemas/Appointment.schema';
@@ -9,6 +8,7 @@ import NameField from '../components/AppointmentForm/NameField';
 import BirthDateField from '../components/AppointmentForm/BirthDateField';
 import AppointmentDayField from '../components/AppointmentForm/AppointmentDayField';
 import SubmitButton from '../components/AppointmentForm/SubmitButton';
+import api from '../services/api';
 
 export type FormData = {
   name: string;
@@ -25,7 +25,7 @@ const AppointmentFormPage: React.FC = () => {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
-      await axios.post('http://localhost:3000/api/appointments', data);
+      await api.post('/appointments', data);
       openModal('Agendamento Criado com Sucesso', '#4BB543');
       setError(null);
       reset();
