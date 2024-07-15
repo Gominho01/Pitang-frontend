@@ -24,3 +24,12 @@ export const fetchAppointments = async () => {
     throw error;
   }
 };
+
+export const createAppointment = async (data: any) => {
+  try {
+    await api.post('/appointments', data);
+  } catch (error) {
+    console.error('Error creating appointment', error);
+    throw error;
+  }
+};
