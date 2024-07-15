@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Box, Heading, Text } from '@chakra-ui/react';
 import { Appointment, GroupedAppointments } from '../interfaces/List.interfaces';
 import AppointmentGroup from '../components/AppointmentList/AppointmentGroup';
+import api from '../services/api';
 
 const AppointmentsPage: React.FC = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -10,7 +10,7 @@ const AppointmentsPage: React.FC = () => {
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/appointments');
+        const response = await api.get('/appointments');
         setAppointments(response.data);
       } catch (error) {
         console.error('Error fetching appointments', error);
@@ -22,7 +22,7 @@ const AppointmentsPage: React.FC = () => {
 
   const handleCompletionToggle = async (id: number, completed: boolean, conclusion: string) => {
     try {
-      await axios.patch(`http://localhost:3000/api/appointments/${id}`, { completed, conclusion });
+      await api.patch(`/appointments/${id}`, { completed, conclusion });
       setAppointments(prevAppointments =>
         prevAppointments.map(app =>
           app.id === id ? { ...app, completed, conclusion } : app
