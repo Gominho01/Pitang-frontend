@@ -1,29 +1,12 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z, ZodType } from 'zod';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 import {  Button, FormControl, FormLabel, Input, VStack, Box, Heading, Text } from '@chakra-ui/react';
 import { useModal } from '../../context/modalContext';
-
-const schema: ZodType<any> = z.object({
-  name: z.string().min(1, 'Nome é obrigatório'),
-  birthDate: z.date().refine(date => {
-    const today = new Date();
-    return date <= today;
-  }, {
-    message: 'A data de nascimento deve ser anterior ou igual à data atual'
-  }),
-  appointmentDay: z.date().refine(date => {
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-    return minutes === 0 && seconds === 0;
-  }, {
-    message: 'Os agendamentos só podem ser feitos em horários exatos (ex: 11:00, 12:00)'
-  }),
-});
+import {schema} from '../../schemas/Appointment.schema'
 
 type FormData = {
   name: string;
