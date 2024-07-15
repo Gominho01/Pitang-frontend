@@ -12,4 +12,14 @@ export interface GroupedAppointments {
     [key: string]: Appointment[];
   };
 }
-  
+
+export interface AppointmentItemProps {
+  appointment: Appointment;
+  handleCompletionToggle: (id: number, completed: boolean, conclusion: string) => void;
+}
+
+export interface AppointmentGroupProps {
+  day: string;
+  appointments: { [time: string]: Appointment[] };
+  handleCompletionToggle: (id: number, completed: boolean, conclusion: string) => void;
+}
