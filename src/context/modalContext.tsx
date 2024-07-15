@@ -1,29 +1,10 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useState, ReactNode } from 'react';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton } from '@chakra-ui/react';
+import { ModalContextProps } from '../interfaces/Modal.interfaces';
 
-interface ModalContextProps {
-  showModal: boolean;
-  modalContent: string | null;
-  color: string;
-  openModal: (content: string, color?: string) => void;
-  closeModal: () => void;
-}
+export const ModalContext = createContext<ModalContextProps | undefined>(undefined);
 
-const ModalContext = createContext<ModalContextProps | undefined>(undefined);
-
-export const useModal = (): ModalContextProps => {
-  const context = useContext(ModalContext);
-  if (!context) {
-    throw new Error('useModal must be used within a ModalProvider');
-  }
-  return context;
-};
-
-interface ModalProviderProps {
-  children: ReactNode;
-}
-
-export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
+export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState<string | null>(null);
   const [color, setColor] = useState('#fff');

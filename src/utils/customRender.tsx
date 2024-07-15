@@ -1,11 +1,8 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { ModalProvider } from '../context/modalContext';
-
-interface AllTheProvidersProps {
-  children: ReactNode;
-}
+import { AllTheProvidersProps } from '../interfaces/utils.interfaces'
 
 const AllTheProviders: React.FC<AllTheProvidersProps> = ({ children }) => {
   return (
