@@ -81,7 +81,13 @@ const AppointmentsPage: React.FC = () => {
   };
 
   const groupedAppointments = groupedAppointmentsByDateTime();
-  const allDatesWithAppointments = getAllDatesWithAppointments(appointments);
+  let allDatesWithAppointments = getAllDatesWithAppointments(appointments);
+
+  allDatesWithAppointments = allDatesWithAppointments.sort((a, b) => {
+    const dateA = new Date(a.split('/').reverse().join('-'));
+    const dateB = new Date(b.split('/').reverse().join('-')); 
+    return dateA.getTime() - dateB.getTime();
+  });
 
   return (
     <Box maxW="600px" mx="auto" mt={20} p={8} borderWidth={1} borderRadius="md" boxShadow="md" bg="gray.50" color="teal.600" borderColor="teal.400">
