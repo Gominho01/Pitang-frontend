@@ -8,13 +8,8 @@ import NameField from '../components/AppointmentForm/NameField';
 import BirthDateField from '../components/AppointmentForm/BirthDateField';
 import AppointmentDayField from '../components/AppointmentForm/AppointmentDayField';
 import SubmitButton from '../components/AppointmentForm/SubmitButton';
+import { FormData } from '../interfaces/Forms.interfaces';
 import api from '../services/api';
-
-export type FormData = {
-  name: string;
-  birthDate: Date;
-  appointmentDay: Date;
-};
 
 const AppointmentFormPage: React.FC = () => {
   const { register, handleSubmit, formState: { errors }, setValue, watch, reset } = useForm<FormData>({
