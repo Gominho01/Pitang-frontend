@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
 import { Box, Text, Checkbox, Input, Button } from '@chakra-ui/react';
 import { AppointmentItemProps } from '../../interfaces/List.interfaces';
-import axios from 'axios';
 
 const AppointmentItem: React.FC<AppointmentItemProps> = ({ appointment, handleCompletionToggle }) => {
   const [editedConclusion, setEditedConclusion] = useState<string>(appointment.conclusion || '');
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const handleSave = async () => {
-    await handleCompletionToggle(appointment.id, appointment.completed, editedConclusion);
+    handleCompletionToggle(appointment.id, appointment.completed, editedConclusion);
     setIsEditing(false);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditedConclusion(e.target.value);
+    setIsEditing(true);
+  };
+
+  const handleBlur = () => {
+    if (appointment.conclusion === editedConclusion) {
+      setIsEditing(false);
+    }
   };
 
   return (
@@ -28,9 +38,9 @@ const AppointmentItem: React.FC<AppointmentItemProps> = ({ appointment, handleCo
           <Input
             id="conclusao"
             aria-label="Conclusão"
-            value={isEditing ? editedConclusion : appointment.conclusion || ''}
-            onChange={(e) => setEditedConclusion(e.target.value)}
-            onFocus={() => setIsEditing(true)}
+            value={editedConclusion}
+            onChange={handleInputChange}
+            onBlur={handleBlur}
           />
           {isEditing && (
             <Button onClick={handleSave} mt={2}>
