@@ -1,11 +1,7 @@
 import React from 'react';
 import { Button } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-
-interface CustomButtonProps {
-  to: string;
-  children: React.ReactNode;
-}
+import { CustomButtonProps } from '../interfaces/utils.interfaces'
 
 const CustomButton: React.FC<CustomButtonProps> = ({ to, children }) => {
   return (
