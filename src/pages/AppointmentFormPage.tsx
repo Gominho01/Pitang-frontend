@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { VStack, Box, Heading, Text } from '@chakra-ui/react';
-import { useModal } from '../context/modalContext';
+import { useModal } from '../hooks/useModal';
 import { schema } from '../schemas/Appointment.schema';
 import NameField from '../components/AppointmentForm/NameField';
 import BirthDateField from '../components/AppointmentForm/BirthDateField';
