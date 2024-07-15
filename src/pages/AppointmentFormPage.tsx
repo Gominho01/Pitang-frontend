@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { VStack, Box, Heading, Text } from '@chakra-ui/react';
+import { VStack, Box, Heading } from '@chakra-ui/react';
 import { useModal } from '../hooks/useModal';
-import { schema } from '../schemas/Appointment.schema';
+import { useFormHooks } from '../hooks/useForms';
 import NameField from '../components/AppointmentForm/NameField';
 import BirthDateField from '../components/AppointmentForm/BirthDateField';
 import AppointmentDayField from '../components/AppointmentForm/AppointmentDayField';
@@ -12,13 +10,11 @@ import { FormData } from '../interfaces/Forms.interfaces';
 import api from '../services/api';
 
 const AppointmentFormPage: React.FC = () => {
-  const { register, handleSubmit, formState: { errors }, setValue, watch, reset } = useForm<FormData>({
-    resolver: zodResolver(schema),
-  });
+  const { register, handleSubmit, errors, setValue, watch, reset } = useFormHooks();
   const { openModal } = useModal();
   const [error, setError] = useState<string | null>(null);
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
+  const onSubmit = async (data: FormData) => {
     try {
       await api.post('/appointments', data);
       openModal('Agendamento Criado com Sucesso', '#4BB543');
