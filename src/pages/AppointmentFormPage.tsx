@@ -7,7 +7,7 @@ import BirthDateField from '../components/AppointmentForm/BirthDateField';
 import AppointmentDayField from '../components/AppointmentForm/AppointmentDayField';
 import SubmitButton from '../components/AppointmentForm/SubmitButton';
 import { FormData } from '../interfaces/Forms.interfaces';
-import api from '../services/api';
+import { createAppointment } from '../services/api';
 
 const AppointmentFormPage: React.FC = () => {
   const { register, handleSubmit, errors, setValue, watch, reset } = useFormHooks();
@@ -16,7 +16,7 @@ const AppointmentFormPage: React.FC = () => {
 
   const onSubmit = async (data: FormData) => {
     try {
-      await api.post('/appointments', data);
+      await createAppointment(data);
       openModal('Agendamento Criado com Sucesso', '#4BB543');
       setError(null);
       reset();

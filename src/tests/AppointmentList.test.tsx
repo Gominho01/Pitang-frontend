@@ -1,4 +1,4 @@
-import api from '../services/api';
+import { fetchAppointments } from '../services/api';
 import React from 'react';
 import { screen, waitFor, act, fireEvent } from '@testing-library/react';
 import AppointmentsList from '../pages/AppointmentListPage';
@@ -9,7 +9,7 @@ jest.mock('../services/api');
 
 describe('AppointmentsList', () => {
   beforeEach(() => {
-    (api.get as jest.Mock).mockImplementation(() => Promise.resolve({ data: mockAppointments }));
+    (fetchAppointments as jest.Mock).mockResolvedValue(mockAppointments);
   });
 
   afterEach(() => {
