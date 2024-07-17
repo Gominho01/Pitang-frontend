@@ -9,7 +9,7 @@ const Wrapper = () => {
   return <BirthDateField setValue={setValue} watch={watch} errors={errors} />;
 };
 
-test('renders BirthDateField and changes date', async () => {
+it('should render BirthDateField and changes date', async () => {
   render(<Wrapper />);
   
   const datePicker = screen.getByLabelText('Data de Nascimento:') as HTMLInputElement;
