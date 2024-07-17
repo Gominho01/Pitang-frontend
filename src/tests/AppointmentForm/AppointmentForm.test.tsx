@@ -1,11 +1,11 @@
 import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import AppointmentForm from '../pages/AppointmentFormPage';
-import { customRender } from '../utils/customRender';
-import { fillAndSubmitForm } from '../utils/testUtils';
-import { createAppointment } from '../services/api';
+import AppointmentForm from '../../pages/AppointmentFormPage';
+import { customRender } from '../../utils/customRender';
+import { fillAndSubmitForm } from '../../utils/testUtils';
+import { createAppointment } from '../../services/api';
 
-jest.mock('../services/api');
+jest.mock('../../services/api');
 const mockedCreateAppointment = createAppointment as jest.Mock;
 
 describe('<AppointmentForm/>', () => {
