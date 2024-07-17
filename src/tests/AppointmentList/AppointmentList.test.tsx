@@ -5,7 +5,7 @@ import AppointmentsList from '../../pages/AppointmentListPage';
 import { customRender } from '../../utils/customRender';
 import { mockAppointments } from '../../utils/testUtils';
 
-jest.mock('../services/api');
+jest.mock('../../services/api');
 
 describe('AppointmentsList', () => {
   beforeEach(() => {
