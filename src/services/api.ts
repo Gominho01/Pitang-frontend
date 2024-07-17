@@ -7,29 +7,14 @@ const api = axios.create({
 export default api;
 
 export const updateAppointment = async (id: number, completed: boolean, conclusion: string) => {
-  try {
-    await api.patch(`/appointments/${id}`, { completed, conclusion });
-  } catch (error) {
-    console.error('Error updating appointment status', error);
-    throw error;
-  }
+  return api.patch(`/appointments/${id}`, { completed, conclusion });
 };
 
 export const fetchAppointments = async () => {
-  try {
-    const response = await api.get('/appointments');
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching appointments', error);
-    throw error;
-  }
+  const response = await api.get('/appointments');
+  return response.data;
 };
 
 export const createAppointment = async (data: any) => {
-  try {
-    await api.post('/appointments', data);
-  } catch (error) {
-    console.error('Error creating appointment', error);
-    throw error;
-  }
+  return api.post('/appointments', data);
 };
