@@ -1,12 +1,12 @@
 import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import AppointmentForm from '../pages/AppointmentFormPage';
-import api from '../services/api';
 import { customRender } from '../utils/customRender';
 import { fillAndSubmitForm } from '../utils/testUtils';
+import { createAppointment } from '../services/api';
 
 jest.mock('../services/api');
-const mockedApi = api as jest.Mocked<typeof api>;
+const mockedCreateAppointment = createAppointment as jest.Mock;
 
 describe('<AppointmentForm/>', () => {
   it('should render correctly and show title', async () => {
@@ -40,20 +40,21 @@ describe('<AppointmentForm/>', () => {
     expect(messageSuccess).toBeInTheDocument();
   });
 
-  it('should fail to submit appointment', async () => {
-    mockedApi.post.mockRejectedValue(new Error('Erro ao Criar Agendamento'));
+  it('should handle submission error', async () => {
+    mockedCreateAppointment.mockRejectedValueOnce({
+      response: { data: { error: 'Erro ao criar o agendamento' } }
+    });
+
     customRender(<AppointmentForm />);
 
     const inputName = screen.getByLabelText('Nome:');
     const inputBirthDate = screen.getByLabelText('Data de Nascimento:');
-    const inputAppointmentDate = screen.getByLabelText('Data e Hora do Agendamento:');
+    const inputAppointmentDay = screen.getByLabelText('Data e Hora do Agendamento:');
     const submitButton = screen.getByRole('button', { name: /Agendar/i });
+    fillAndSubmitForm(inputName, inputBirthDate, inputAppointmentDay, submitButton);
 
-    fillAndSubmitForm(inputName, inputBirthDate, inputAppointmentDate, submitButton);
-    fillAndSubmitForm(inputName, inputBirthDate, inputAppointmentDate, submitButton);
-    fillAndSubmitForm(inputName, inputBirthDate, inputAppointmentDate, submitButton);
-
-    const messageError = await screen.findByText(/Erro ao Criar Agendamento/i);
-    expect(messageError).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Erro ao Criar Agendamento')).toBeInTheDocument();
+    });
   });
 });
