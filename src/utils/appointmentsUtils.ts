@@ -58,3 +58,8 @@ export const groupedAppointmentsByDateTime = (appointments: Appointment[], selec
 
   return groupedAppointments;
 };
+
+export const removeMilliseconds = (date: Date): Date => {
+  date.setMilliseconds(0);
+  return date;
+};

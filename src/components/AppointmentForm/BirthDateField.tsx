@@ -3,14 +3,10 @@ import { FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { BirthDateFieldProps } from '../../interfaces/Forms.interfaces';
+import { removeMilliseconds } from '../../utils/appointmentsUtils';
 
 const BirthDateField: React.FC<BirthDateFieldProps> = ({ setValue, watch, errors }) => {
   const watchBirthDate = watch('birthDate');
-
-  const removeMilliseconds = (date: Date): Date => {
-    date.setMilliseconds(0);
-    return date;
-  };
 
   return (
     <FormControl>

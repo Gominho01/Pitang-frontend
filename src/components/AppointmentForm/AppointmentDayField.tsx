@@ -3,14 +3,10 @@ import { FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { AppointmentDayFieldProps } from '../../interfaces/Forms.interfaces';
+import { removeMilliseconds } from '../../utils/appointmentsUtils';
 
 const AppointmentDayField: React.FC<AppointmentDayFieldProps> = ({ setValue, watch, errors }) => {
   const watchAppointmentDay = watch('appointmentDay');
-
-  const removeMilliseconds = (date: Date): Date => {
-    date.setMilliseconds(0);
-    return date;
-  };
 
   return (
     <FormControl>
