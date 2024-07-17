@@ -9,7 +9,7 @@ const Wrapper = () => {
   return <NameField register={register} errors={errors} />;
 };
 
-test('renders NameField and changes input', () => {
+it('should render NameField and changes input', () => {
   render(<Wrapper />);
   
   const nameInput = screen.getByLabelText('Nome:') as HTMLInputElement;
