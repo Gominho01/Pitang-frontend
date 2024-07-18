@@ -41,16 +41,14 @@ const AppointmentDayField: React.FC<AppointmentDayFieldProps> = ({ setValue, wat
         dayjs().isSame(selectedDate, 'day') &&
         selectedDate.hour() < currentDateTime.hour()
       ) {
-        const nextValidDate = currentDateTime.hour() >= 20 ? currentDateTime.add(1, 'day').hour(11).minute(0) : currentDateTime.hour(20).minute(0);
-        setValue('appointmentDay', removeMilliseconds(nextValidDate.toDate()));
-        if (selectedDate.hour() === 11) {
-          return;
+        const nextValidDate = (currentDateTime.hour() >= 20 ? currentDateTime.add(1, 'day').hour(11).minute(0) : currentDateTime.hour(20).minute(0).second(0)).toDate();
+        setValue('appointmentDay', removeMilliseconds(nextValidDate));
+        if (selectedDate.hour() !== 11) {
+          openModal('Esse horário não está disponível', '#FC100D');
         }
-        openModal('Esse horário não está disponível', '#FC100D');
-        return;
+        date = nextValidDate
       }
       setValue('appointmentDay', removeMilliseconds(date));
-      console.log(date)
     }
   };
 
