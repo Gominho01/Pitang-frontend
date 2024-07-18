@@ -23,9 +23,9 @@ const AppointmentFormPage: React.FC = () => {
     } catch (error: any) {
       const errorMessage = error.response?.data?.error || 'Erro ao criar o agendamento';
       setError(errorMessage);
-      openModal('Erro ao Criar Agendamento', '#FC100D');
+      openModal(errorMessage, '#FC100D');
     }
-  };
+  };  
 
   return (
     <Box maxW="600px" mx="auto" mt={20} p={8} borderWidth={1} borderRadius="md" boxShadow="md" bg="gray.50">
