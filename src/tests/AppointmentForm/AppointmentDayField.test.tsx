@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import AppointmentDayField from '../../components/AppointmentForm/AppointmentDayField';
 import { useForm } from 'react-hook-form';
 import { FormData } from '../../interfaces/Forms.interfaces';
+import { customRender } from '../../utils/customRender';
 
 const Wrapper = () => {
   const { setValue, watch, formState: { errors } } = useForm<FormData>();
@@ -10,7 +11,7 @@ const Wrapper = () => {
 };
 
 it('should render AppointmentDayField and changes date', () => {
-  render(<Wrapper />);
+  customRender(<Wrapper />);
   
   const datePicker = screen.getByLabelText('Data e Hora do Agendamento:') as HTMLInputElement; 
   expect(datePicker).toBeInTheDocument();
