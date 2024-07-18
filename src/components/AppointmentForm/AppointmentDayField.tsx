@@ -21,7 +21,7 @@ const AppointmentDayField: React.FC<AppointmentDayFieldProps> = ({ setValue, wat
       return false;
     }
 
-    return selectedHour < 11 || selectedHour > 20 || (dayjs().isSame(watchAppointmentDay, 'day') && selectedHour < currentHour);
+    return selectedHour < 9 || selectedHour > 20 || (dayjs().isSame(watchAppointmentDay, 'day') && selectedHour < currentHour);
   };
 
   const filterTime = (time: Date) => {
@@ -33,7 +33,7 @@ const AppointmentDayField: React.FC<AppointmentDayFieldProps> = ({ setValue, wat
       const selectedDate = dayjs(date);
       const currentDateTime = dayjs();
 
-      if (selectedDate.hour() < 11 || selectedDate.hour() > 20 ){
+      if (selectedDate.hour() < 9 || selectedDate.hour() > 20 ){
         openModal('Horário inválido', '#FC100D');
         return;
       }
@@ -41,9 +41,9 @@ const AppointmentDayField: React.FC<AppointmentDayFieldProps> = ({ setValue, wat
         dayjs().isSame(selectedDate, 'day') &&
         selectedDate.hour() < currentDateTime.hour()
       ) {
-        const nextValidDate = (currentDateTime.hour() >= 20 ? currentDateTime.add(1, 'day').hour(11).minute(0) : currentDateTime.hour(20).minute(0).second(0)).toDate();
+        const nextValidDate = (currentDateTime.hour() >= 20 ? currentDateTime.add(1, 'day').hour(9).minute(0) : currentDateTime.hour(20).minute(0).second(0)).toDate();
         setValue('appointmentDay', removeMilliseconds(nextValidDate));
-        if (selectedDate.hour() !== 11) {
+        if (selectedDate.hour() !== 9) {
           openModal('Esse horário não está disponível', '#FC100D');
         }
         date = nextValidDate
@@ -65,7 +65,7 @@ const AppointmentDayField: React.FC<AppointmentDayFieldProps> = ({ setValue, wat
         timeCaption="Hora"
         dateFormat="dd/MM/yyyy HH:mm"
         minDate={new Date()}
-        minTime={new Date(new Date().setHours(11, 0, 0, 0))}
+        minTime={new Date(new Date().setHours(9, 0, 0, 0))}
         maxTime={new Date(new Date().setHours(20, 0))}
         filterTime={filterTime}
         customInput={<Input borderColor="teal.400" focusBorderColor="teal.600" />}
