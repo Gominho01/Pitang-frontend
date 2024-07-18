@@ -41,7 +41,7 @@ const AppointmentDayField: React.FC<AppointmentDayFieldProps> = ({ setValue, wat
         dayjs().isSame(selectedDate, 'day') &&
         selectedDate.hour() < currentDateTime.hour()
       ) {
-        const nextValidDate = (currentDateTime.hour() >= 20 ? currentDateTime.add(1, 'day').hour(9).minute(0) : currentDateTime.hour(20).minute(0).second(0)).toDate();
+        const nextValidDate = (currentDateTime.hour() > 20 ? currentDateTime.add(1, 'day').hour(9).minute(0) : currentDateTime.hour(20).minute(0).second(0)).toDate();
         setValue('appointmentDay', removeMilliseconds(nextValidDate));
         if (selectedDate.hour() !== 9) {
           openModal('Esse horário não está disponível', '#FC100D');
