@@ -54,7 +54,7 @@ describe('<AppointmentForm/>', () => {
     fillAndSubmitForm(inputName, inputBirthDate, inputAppointmentDay, submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText('Erro ao Criar Agendamento')).toBeInTheDocument();
+      expect(screen.getByTestId('error-message')).toHaveTextContent('Erro ao criar o agendamento');
     });
   });
 });

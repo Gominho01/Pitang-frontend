@@ -25,7 +25,7 @@ const AppointmentFormPage: React.FC = () => {
       setError(errorMessage);
       openModal(errorMessage, '#FC100D');
     }
-  };  
+  };
 
   return (
     <Box maxW="600px" mx="auto" mt={20} p={8} borderWidth={1} borderRadius="md" boxShadow="md" bg="gray.50">
@@ -38,6 +38,7 @@ const AppointmentFormPage: React.FC = () => {
           <SubmitButton />
         </VStack>
       </form>
+      {error && <div data-testid="error-message">{error}</div>}
     </Box>
   );
 };
