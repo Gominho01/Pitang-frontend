@@ -5,11 +5,12 @@ import AppointmentPage from './pages/AppointmentFormPage';
 import { ModalProvider } from './context/modalContext';
 import AppointmentList from './pages/AppointmentListPage';
 import Navbar from './components/Navbar/Navbar'
+import theme from './theme';
 
 const App: React.FC = () => {
   return (
     <ModalProvider>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <Router>
           <Navbar />
           <Routes>
