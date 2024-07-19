@@ -55,4 +55,13 @@ do formulário
     ```bash
     npm run dev
     ```
-5. Acesse o aplicativo em `http://localhost:5173`
+5. Acesse a aplicação em `http://localhost:5173`
+## Testes
+1. Va para a pasta pitang frontend
+    ```bash
+    cd pitang-frontend
+    ```
+2. Rode os testes
+    ```bash
+    npm run test
+    ```
