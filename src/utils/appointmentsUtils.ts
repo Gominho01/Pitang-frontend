@@ -1,4 +1,4 @@
-import { Appointment, GroupedAppointments } from '../interfaces/List.interfaces';
+import { Appointment, GroupedAppointments } from '../interfaces/list.interface';
 
 export const getAllDatesWithAppointments = (appointments: Appointment[]): string[] => {
   const datesSet = new Set<string>();

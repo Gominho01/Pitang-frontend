@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { VStack, Box, Heading } from '@chakra-ui/react';
 import { useModal } from '../hooks/useModal';
 import { useFormHooks } from '../hooks/useForms';
-import NameField from '../components/AppointmentForm/NameField';
-import BirthDateField from '../components/AppointmentForm/BirthDateField';
-import AppointmentDayField from '../components/AppointmentForm/AppointmentDayField';
-import SubmitButton from '../components/AppointmentForm/SubmitButton';
-import { FormData } from '../interfaces/Forms.interfaces';
+import NameField from '../components/forms/name';
+import BirthDateField from '../components/forms/birthdayField';
+import AppointmentDayField from '../components/forms/appointmentDateField';
+import SubmitButton from '../components/forms/submit';
+import { FormData } from '../interfaces/forms.interface';
 import { createAppointment } from '../services/api';
 
 const AppointmentFormPage: React.FC = () => {

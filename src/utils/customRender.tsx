@@ -2,7 +2,7 @@ import React from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { ModalProvider } from '../context/modalContext';
-import { AllTheProvidersProps } from '../interfaces/utils.interfaces'
+import { AllTheProvidersProps } from '../interfaces/utils.interface'
 
 const AllTheProviders: React.FC<AllTheProvidersProps> = ({ children }) => {
   return (

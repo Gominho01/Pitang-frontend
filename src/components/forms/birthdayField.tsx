@@ -2,7 +2,7 @@ import React from 'react';
 import { FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { BirthDateFieldProps } from '../../interfaces/Forms.interfaces';
+import { BirthDateFieldProps } from '../../interfaces/forms.interface';
 import { removeMilliseconds } from '../../utils/appointmentsUtils';
 
 const BirthDateField: React.FC<BirthDateFieldProps> = ({ setValue, watch, errors }) => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Heading, Text, Select } from '@chakra-ui/react';
-import { Appointment } from '../interfaces/List.interfaces';
-import AppointmentGroup from '../components/AppointmentList/AppointmentGroup';
+import { Appointment } from '../interfaces/list.interface';
+import AppointmentGroup from '../components/list/groupedAppointment';
 import { updateAppointment, fetchAppointments } from '../services/api';
 import { getAllDatesWithAppointments, groupedAppointmentsByDateTime } from '../utils/appointmentsUtils';
 

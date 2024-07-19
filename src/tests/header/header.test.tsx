@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/header/header';
 import '@testing-library/react';
 
 interface RenderWithRouterOptions {

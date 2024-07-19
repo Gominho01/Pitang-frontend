@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Text, Checkbox, Input, Button } from '@chakra-ui/react';
-import { AppointmentItemProps } from '../../interfaces/List.interfaces';
+import { AppointmentItemProps } from '../../interfaces/list.interface';
 
 const AppointmentItem: React.FC<AppointmentItemProps> = ({ appointment, handleCompletionToggle }) => {
   const [editedConclusion, setEditedConclusion] = useState<string>(appointment.conclusion || '');

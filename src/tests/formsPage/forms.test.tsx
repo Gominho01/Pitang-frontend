@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import AppointmentForm from '../../pages/AppointmentFormPage';
+import AppointmentForm from '../../pages/formsPage';
 import { customRender } from '../../utils/customRender';
 import { fillAndSubmitForm } from '../../utils/testUtils';
 import { createAppointment } from '../../services/api';
