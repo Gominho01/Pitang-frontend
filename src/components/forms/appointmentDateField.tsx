@@ -2,7 +2,7 @@ import React from 'react';
 import { FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { AppointmentDayFieldProps } from '../../interfaces/Forms.interfaces';
+import { AppointmentDayFieldProps } from '../../interfaces/forms.interface';
 import { removeMilliseconds } from '../../utils/appointmentsUtils';
 import dayjs from 'dayjs';
 import { useModal } from '../../hooks/useModal';

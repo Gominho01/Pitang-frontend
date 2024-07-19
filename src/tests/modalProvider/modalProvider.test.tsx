@@ -2,7 +2,7 @@ import React from 'react';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { ModalContext } from '../../context/modalContext';
 import { customRender } from '../../utils/customRender';
-import { ModalContextProps } from '../../interfaces/Modal.interfaces';
+import { ModalContextProps } from '../../interfaces/modal.interface';
 
 const TestComponent = () => {
   const { openModal, closeModal } = React.useContext(ModalContext) as ModalContextProps;

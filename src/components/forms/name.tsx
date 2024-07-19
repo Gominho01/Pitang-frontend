@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
-import { NameFieldProps } from '../../interfaces/Forms.interfaces';
+import { NameFieldProps } from '../../interfaces/forms.interface';
 
 const NameField: React.FC<NameFieldProps> = ({ register, errors }) => (
   <FormControl>
