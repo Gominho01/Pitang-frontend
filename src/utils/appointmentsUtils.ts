@@ -1,4 +1,5 @@
 import { Appointment, GroupedAppointments } from '../interfaces/list.interface';
+import dayjs from 'dayjs';
 
 export const getAllDatesWithAppointments = (appointments: Appointment[]): string[] => {
   const datesSet = new Set<string>();
@@ -62,4 +63,21 @@ export const groupedAppointmentsByDateTime = (appointments: Appointment[], selec
 export const removeMilliseconds = (date: Date): Date => {
   date.setMilliseconds(0);
   return date;
+};
+
+export const isDisabledTime = (time: Date, watchAppointmentDay: Date) => {
+  const currentHour = dayjs().hour();
+  const selectedHour = dayjs(time).hour();
+  const currentMinute = dayjs().minute();
+  const selectedMinute = dayjs(time).minute();
+
+  if (dayjs().isSame(watchAppointmentDay, 'day') && selectedHour === currentHour && selectedMinute <= currentMinute) {
+    return false;
+  }
+
+  return selectedHour < 9 || selectedHour > 20 || (dayjs().isSame(watchAppointmentDay, 'day') && selectedHour < currentHour);
+};
+
+export const filterTime = (time: Date, watchAppointmentDay: Date) => {
+  return !isDisabledTime(time, watchAppointmentDay);
 };
