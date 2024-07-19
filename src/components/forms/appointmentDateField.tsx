@@ -2,8 +2,8 @@ import React from 'react';
 import { FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { AppointmentDayFieldProps } from '../../interfaces/Forms.interfaces';
-import { removeMilliseconds } from '../../utils/appointmentsUtils';
+import { AppointmentDayFieldProps } from '../../interfaces/forms.interface';
+import { removeMilliseconds, filterTime } from '../../utils/appointmentsUtils';
 import dayjs from 'dayjs';
 import { useModal } from '../../hooks/useModal';
 
@@ -11,29 +11,12 @@ const AppointmentDayField: React.FC<AppointmentDayFieldProps> = ({ setValue, wat
   const watchAppointmentDay = watch('appointmentDay');
   const { openModal } = useModal();
 
-  const isDisabledTime = (time: Date) => {
-    const currentHour = dayjs().hour();
-    const selectedHour = dayjs(time).hour();
-    const currentMinute = dayjs().minute();
-    const selectedMinute = dayjs(time).minute();
-
-    if (dayjs().isSame(watchAppointmentDay, 'day') && selectedHour === currentHour && selectedMinute <= currentMinute) {
-      return false;
-    }
-
-    return selectedHour < 9 || selectedHour > 20 || (dayjs().isSame(watchAppointmentDay, 'day') && selectedHour < currentHour);
-  };
-
-  const filterTime = (time: Date) => {
-    return !isDisabledTime(time);
-  };
-
   const handleChange = (date: Date | null) => {
     if (date) {
       const selectedDate = dayjs(date);
       const currentDateTime = dayjs();
 
-      if (selectedDate.hour() < 9 || selectedDate.hour() > 20 ){
+      if (selectedDate.hour() < 9 || selectedDate.hour() > 20){
         openModal('Horário inválido', '#FC100D');
         return;
       }
@@ -67,7 +50,7 @@ const AppointmentDayField: React.FC<AppointmentDayFieldProps> = ({ setValue, wat
         minDate={new Date()}
         minTime={new Date(new Date().setHours(9, 0, 0, 0))}
         maxTime={new Date(new Date().setHours(20, 0))}
-        filterTime={filterTime}
+        filterTime={(time) => filterTime(time, watchAppointmentDay)}
         customInput={<Input borderColor="teal.400" focusBorderColor="teal.600" />}
       />
       {errors.appointmentDay && <Text data-testid="appointmentDay-error" color="red.500" mt={1}>{errors.appointmentDay.message}</Text>}

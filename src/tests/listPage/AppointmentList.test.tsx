@@ -1,7 +1,7 @@
 import { fetchAppointments } from '../../services/api';
 import React from 'react';
 import { screen, waitFor, act, fireEvent } from '@testing-library/react';
-import AppointmentsList from '../../pages/AppointmentListPage';
+import AppointmentsList from '../../pages/listPage';
 import { customRender } from '../../utils/customRender';
 import { mockAppointments } from '../../utils/testUtils';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import SubmitButton from '../../components/AppointmentForm/SubmitButton';
+import SubmitButton from '../../components/forms/submit';
 
 it('should render SubmitButton and clicks', () => {
   const handleSubmit = jest.fn();

@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import NameField from '../../components/AppointmentForm/NameField';
+import NameField from '../../components/forms/name';
 import { useForm } from 'react-hook-form';
-import { FormData } from '../../interfaces/Forms.interfaces';
+import { FormData } from '../../interfaces/forms.interface';
 
 const Wrapper = () => {
   const { register, formState: { errors } } = useForm<FormData>();
